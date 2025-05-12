@@ -1,0 +1,25 @@
+version: "3"
+services:
+  rabbitmq:
+    build:
+      context: ./rabbitmq
+      dockerfile: Dockerfile
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - 127.0.0.1:5672:5672
+      - 127.0.0.1:15672:15672
+      - 127.0.0.1:61613:61613
+  postgresql_issuetracker:
+    image: postgres:12.1
+    environment:
+      POSTGRES_DB: issuetracker
+      POSTGRES_USER: issuetracker
+      POSTGRES_PASSWORD: issuetracker
+    volumes:
+      - postgresql_data_issuetracker:/var/lib/postgresql/data
+    ports:
+      - 127.0.0.1:5432:5432
+volumes:
+  postgresql_data_issuetracker:
